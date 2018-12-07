@@ -178,10 +178,15 @@ cdef class _NaT(datetime):
 
     @property
     def asm8(self):
+        """
+        Return a numpy timedelta64 array scalar view.
+        """
         return np.datetime64(NPY_NAT, 'ns')
 
     def to_datetime64(self):
-        """ Returns a numpy.datetime64 object with 'ns' precision """
+        """
+        Returns a numpy.datetime64 object with 'ns' precision
+        """
         return np.datetime64('NaT', 'ns')
 
     def __repr__(self):
@@ -240,7 +245,9 @@ cdef class _NaT(datetime):
 
 
 class NaTType(_NaT):
-    """(N)ot-(A)-(T)ime, the time equivalent of NaN"""
+    """
+    (N)ot-(A)-(T)ime, the time equivalent of NaN
+    """
 
     def __new__(cls):
         cdef _NaT base
@@ -394,7 +401,9 @@ class NaTType(_NaT):
     )
 
     timestamp = _make_error_func('timestamp',  # noqa:E128
-        """Return POSIX timestamp as float.""")
+        """
+        Return POSIX timestamp as float.
+        """)
 
     # GH9513 NaT methods (except to_datetime64) to raise, return np.nan, or
     # return NaT create functions that raise, for binding to NaTType
@@ -533,7 +542,7 @@ class NaTType(_NaT):
         """)
     ceil = _make_nat_func('ceil',  # noqa:E128
         """
-        return a new Timestamp ceiled to this resolution
+        Return a new Timestamp ceiled to this resolution
 
         Parameters
         ----------
@@ -637,7 +646,7 @@ class NaTType(_NaT):
         """)
     replace = _make_nat_func('replace',  # noqa:E128
         """
-        implements datetime.replace, handles nanoseconds
+        Implements datetime.replace, handles nanoseconds
 
         Parameters
         ----------
@@ -666,7 +675,9 @@ NaT = c_NaT        # Python-visible
 # ----------------------------------------------------------------------
 
 cdef inline bint checknull_with_nat(object val):
-    """ utility to check if a value is a nat or not """
+    """
+    Utility to check if a value is a NaT or not
+    """
     return val is None or util.is_nan(val) or val is c_NaT
 
 

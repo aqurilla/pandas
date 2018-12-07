@@ -496,6 +496,9 @@ cdef class _Timestamp(datetime):
 
     @property
     def asm8(self):
+        """
+        Return a numpy timedelta64 array scalar view.
+        """
         return np.datetime64(self.value, 'ns')
 
     @property
