@@ -59,7 +59,9 @@ def maybe_integer_op_deprecated(obj):
 cdef inline object create_timestamp_from_ts(int64_t value,
                                             npy_datetimestruct dts,
                                             object tz, object freq):
-    """ convenience routine to construct a Timestamp from its parts """
+    """
+    Convenience routine to construct a Timestamp from its parts
+    """
     cdef _Timestamp ts_base
     ts_base = _Timestamp.__new__(Timestamp, dts.year, dts.month,
                                  dts.day, dts.hour, dts.min,
@@ -74,7 +76,7 @@ cdef inline object create_timestamp_from_ts(int64_t value,
 @enum.unique
 class RoundTo(enum.Enum):
     """
-    enumeration defining the available rounding modes
+    Enumeration defining the available rounding modes
 
     Attributes
     ----------
@@ -113,7 +115,9 @@ class RoundTo(enum.Enum):
 
 
 cdef inline _npdivmod(x1, x2):
-    """implement divmod for numpy < 1.13"""
+    """
+    Implement divmod for numpy < 1.13
+    """
     return np.floor_divide(x1, x2), np.remainder(x1, x2)
 
 
@@ -326,7 +330,9 @@ cdef class _Timestamp(datetime):
                         self.microsecond, self.tzinfo)
 
     cpdef to_datetime64(self):
-        """ Returns a numpy.datetime64 object with 'ns' precision """
+        """
+        Returns a numpy.datetime64 object with 'ns' precision
+        """
         return np.datetime64(self.value, 'ns')
 
     def __add__(self, other):
@@ -413,7 +419,9 @@ cdef class _Timestamp(datetime):
         return datetime.__sub__(self, other)
 
     cdef int64_t _maybe_convert_value_to_local(self):
-        """Convert UTC i8 value to local i8 value if tz exists"""
+        """
+        Convert UTC i8 value to local i8 value if tz exists
+        """
         cdef:
             int64_t val
         val = self.value
@@ -500,7 +508,9 @@ cdef class _Timestamp(datetime):
         return Timedelta(nanoseconds=1)
 
     def timestamp(self):
-        """Return POSIX timestamp as float."""
+        """
+        Return POSIX timestamp as float.
+        """
         # py27 compat, see GH#17329
         return round(self.value / 1e9, 6)
 
@@ -512,7 +522,8 @@ cdef class _Timestamp(datetime):
 
 
 class Timestamp(_Timestamp):
-    """Pandas replacement for datetime.datetime
+    """
+    Pandas replacement for datetime.datetime
 
     Timestamp is the pandas equivalent of python's Datetime
     and is interchangeable with it in most cases. It's the type used
@@ -803,7 +814,7 @@ class Timestamp(_Timestamp):
 
     def floor(self, freq, ambiguous='raise', nonexistent='raise'):
         """
-        return a new Timestamp floored to this resolution
+        Return a new Timestamp floored to this resolution
 
         Parameters
         ----------
@@ -835,7 +846,7 @@ class Timestamp(_Timestamp):
 
     def ceil(self, freq, ambiguous='raise', nonexistent='raise'):
         """
-        return a new Timestamp ceiled to this resolution
+        Return a new Timestamp ceiled to this resolution
 
         Parameters
         ----------
@@ -1149,7 +1160,7 @@ class Timestamp(_Timestamp):
                 hour=None, minute=None, second=None, microsecond=None,
                 nanosecond=None, tzinfo=object, fold=0):
         """
-        implements datetime.replace, handles nanoseconds
+        Implements datetime.replace, handles nanoseconds
 
         Parameters
         ----------
